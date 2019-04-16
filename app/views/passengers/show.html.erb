@@ -19,10 +19,10 @@
 <aside>
   <ul>
     <li>
-      <%= link_to "Edit", edit_passenger_path(@passenger) %>
+      <%= link_to "Edit", edit_passenger_path %>
     </li>
     <li>
-      <%= link_to "Delete", passenger_path(@passenger), method: :delete, data: { confirm: "Do you wish to delete #{@passenger.name}?" } %>
+      <%= link_to "Delete", passenger_path(@passenger.id), method: :delete, data: { confirm: "Do you wish to delete #{@passenger.name}?" } %>
     </li>
   </ul>
 </aside>
