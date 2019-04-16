@@ -1,9 +1,9 @@
 <h2>Rideshare Drivers</h2>
 <ul>
-<%= @drivers.each do |driver| %>
-<li>Name:
-<%= link_to driver.name, driver_path(driver.id) %>
-<%= driver.vin %>
-<%end%>
-</li>
+  <%= @drivers.each do |driver| %>
+    <li>Name:
+      <%= link_to driver.name, driver_path(driver.id) %>
+      <%= driver.vin %>
+    <%end%>
+  </li>
 </ul>
