@@ -1,0 +1,21 @@
+  <%= form_with model: @driver, class: 'driver-form' do |f| %>
+  <p>Please provide the following information to save your task:</p>
+  <div>
+    <%= f.label :name, "Driver Name:" %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+  <%= f.label :vin, "Vin Number:" %>
+  <%= f.text_field :vin %>
+  </div>
+
+<div>
+   <%= f.label :car_make, "Car Make"%>
+   <%= f.text_field :car_make  %>
+ </div>
+
+ 
+ <%= f.submit button_text %>
+
+<% end %>
