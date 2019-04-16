@@ -1,0 +1,31 @@
+<!---- Add a new Driver --->    
+<h1><%= Add a new Driver %></h1>
+<%= form_with model: @driver, class: 'driver-edit-form' do |f| %>
+  <p>Please provide the following information to save your task:</p>
+  <div>
+    <%= f.label :name, "Driver Name:" %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+  <%= f.label :vin, "Vin Number:" %>
+  <%= f.text_field :vin %>
+  </div>
+<% end %>
+
+ <h3>Car Make</h3>
+  <div class="dropdown">
+  <button class="dropbtn">Car Make</button>
+  <div class="dropdown-content">
+    <a href="#">Car 1</a>
+    <a href="#">Car 2</a>
+    <a href="#">Car 3</a>
+  </div>
+</div>
+
+
+  <p>
+    <%= f.submit "Create", class: "task-button" %>
+  </p>
+
+<% end %>
