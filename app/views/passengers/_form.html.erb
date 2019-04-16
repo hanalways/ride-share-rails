@@ -1,0 +1,15 @@
+<%= form_with model: @book, class: 'book-form' do |f| %>
+  <p>Please fill out Passenger details</p>
+
+  <div>
+    <%= f.label :name, "Passenger name:" %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div>
+    <%= f.label :phone_num %>
+    <%= f.text_field, placeholder: "(555) 555-5555" %>
+  </div>
+
+  <%= f.submit button_text %>
+<% end %>

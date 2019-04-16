@@ -6,7 +6,7 @@ class Driver < ApplicationRecord
   # validates :vin, presence: true
 
   # def average_rating
-  #   #self is same thing as driver instance, since we are in model
+  #   #self is same as driver instance(driver model)
   #   sum = 0
   #   self.trips.each do |trip|
   #     sum = sum + trip.rating
