@@ -60,6 +60,7 @@ class DriversController < ApplicationController
     return params.require(:driver).permit(
              :name,
              :vin,
+             :status,
              :car_make,
              :car_model
            )

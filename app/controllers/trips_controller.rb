@@ -17,6 +17,20 @@ class TripsController < ApplicationController
     end
   end
 
+  def create
+    trip_data = trip_params
+    driver = Driver.availability_status
+    @trip = Trip.new(trip_data.merge(:driver_id => driver.id))
+
+    saved = @trip.save && driver.update_status
+
+    if saved
+      redirect_to passenger_path(trip_data[:passenger_id])
+    else
+      render :new
+    end
+  end
+
   def edit
     @trip = Trip.find_by(id: params[:id])
   end
@@ -30,7 +44,7 @@ class TripsController < ApplicationController
     end
   end
 
-  def destroy 
+  def destroy
     @trip = Trip.find_by(id: params[:id])
     if @trip
       @trip.destroy
@@ -39,6 +53,7 @@ class TripsController < ApplicationController
   end
 
   private
+
   def trip_params
     params.require(:trip).permit(:id, :date, :rating, :cost, :driver_id, :passenger_id)
   end
