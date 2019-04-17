@@ -1,0 +1,15 @@
+<% if @trip.errors.any? %>
+<ul class="errors">
+  <% @trip.errors.each do |field, message| %>
+  <li>
+    <strong><%= field.capitalize %>: </strong><%= message %>
+  </li>
+  <% end %>
+</ul>
+<% end %>
+
+
+<%# form_with model: @trip, class: 'trip-form' do |f| %>
+  <!–– create form for new trip ––>
+  <%# f.submit button_text %>
+<%# end %>
