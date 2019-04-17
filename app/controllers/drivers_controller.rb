@@ -6,6 +6,7 @@ class DriversController < ApplicationController
   def show
     driver_id = params[:id]
     @driver = Driver.find_by(id: driver_id)
+    @trips = @driver.trips.all
 
     if @driver.nil?
       head :not_found
@@ -17,12 +18,12 @@ class DriversController < ApplicationController
   end
 
   def create
-    @driver = Driver.new(driver_params) # will add car make and car model to the db
+    @drivers = Driver.new(driver_params) # will add car make and car model to the db
 
-    saved = @driver.save
+    saved = @drivers.save
 
     if saved
-      redirect_to trips_path #assuming trips is main page ?
+      redirect_to drivers_path
     else
       render :new
     end
@@ -30,7 +31,7 @@ class DriversController < ApplicationController
 
   def edit
     driver_id = params[:id]
-    @driver = Driver.find_by(driver_id)
+    @driver = Driver.find_by(id: driver_id)
 
     if @driver.nil?
       redirect_to trips_path
@@ -39,23 +40,23 @@ class DriversController < ApplicationController
 
   def update
     driver_id = params[:id]
-    driver = Driver.find_by(driver_id)
+    driver = Driver.find_by(id: driver_id)
 
     driver.update(driver_params)
-    redirect_to trips_path(task.id)
+    redirect_to trips_path(driver.id)
   end
 
   def destroy
     driver_id = params[:id]
-    driver = Driver.find_by(driver_id)
+    driver = Driver.find_by(id: driver_id)
 
-    unless driver
-      head :not_found
-      return
+    if driver.trips.length.zero?
+      # passsengers trip info needs driver info
+      driver.destroy
+      redirect_to drivers_path
+    else
+      render :error #status: :bad_request?
     end
-
-    driver.destroy
-    redirect_to trips_path
   end
 
   private

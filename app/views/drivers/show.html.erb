@@ -1,5 +1,53 @@
-<h2>Drivers Details</h2> 
+<section class="header">
+  <ul>
+  <h2>Driver Trip Details</h2>
+    <li>
+      <img src="http://placekitten.com/150/150">
+    </li>
+    <h3>Driver Name: <%= @driver.name %></h3>
+    <li>
+      <p>Car: <%= @driver.car_make%><%= @driver.car_model%></p>
+      <p>Average Rating: <%= @driver.average_rating %></p>
+      <p>Total Earnings: <%= @driver.total_earnings %></p>
+    </li>
+  </ul>
+  <button type="button">Go Online</button>
+</section>
 
-<%= @driver.name %>
-<%= @driver.car_make%>
-<%= @driver.car_model%>
+<h3>Driver Trips</h3>
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Date</th>
+    <th>Passenger</th>
+    <th>Price</th>
+    <th>Rating</th>
+    <th>Delete</th>
+    <th>Edit</th>
+  </tr>
+<% trips = @driver.trips %>
+<% @trips.each do |trip| %>
+    <tr>
+      <td><%= link_to trip.id, trip_path(trip.id) %></td>
+      <td><%= trip.date %></td>
+      <td><%= link_to trip.passenger.name, trip_path(trip.passenger_id) %></td>
+      <td><%= trip.cost %></td>
+      <td><%= trip.rating %></td>
+      <td><%= link_to "Delete", trip_path(trip), method: :delete, data: { confirm: "Do you want to delete this trip?" } %></td>
+      <td><%= link_to "Edit", edit_trip_path %></td>
+    </tr>
+  <% end %>
+</table>
+
+
+<aside>
+  <ul>
+    <li>
+      <%= link_to "Edit", edit_driver_path %>
+    </li>
+    <li>
+      <%= link_to "Delete", passenger_path(@driver.id), method: :delete, data: { confirm: "Do you wish to delete #{@driver.name}?" } %>
+    </li>
+  </ul>
+</aside>
+

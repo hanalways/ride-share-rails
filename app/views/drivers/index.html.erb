@@ -1,16 +1,13 @@
 <h2>Rideshare Drivers</h2>
 <ul>
-  <li>
     <% @drivers.each do |driver| %>
-    <strong><p><%= link_to "(#{driver.name})", driver_path(driver.id) %></p>
+    <img src="http://placekitten.com/150/150">
+    <li>
+    <strong><p><%= link_to driver.name, driver_path(driver.id) %></p>
       <p>Rating: <%= driver.average_rating %></p>
-
-      <!-- create average rating method in the model  -->
-    </strong>
-    </li>
     <sub><%= link_to "Edit", edit_driver_path(driver.id) %></sub>
     <sub><%= link_to "Delete", driver_path(driver), method: :delete, data: { confirm: "Please confirm you want to delete this driver from the list #{driver.name}?" } %></sub>
-
+    </li>
   <% end %>
 
 </ul>
