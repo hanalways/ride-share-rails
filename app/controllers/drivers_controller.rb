@@ -49,14 +49,9 @@ class DriversController < ApplicationController
   def destroy
     driver_id = params[:id]
     driver = Driver.find_by(id: driver_id)
-
-    if driver.trips.length.zero?
-      # passsengers trip info needs driver info
-      driver.destroy
-      redirect_to drivers_path
-    else
-      render :error #status: :bad_request?
-    end
+    
+    driver.destroy
+    redirect_to drivers_path
   end
 
   private

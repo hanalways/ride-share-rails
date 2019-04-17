@@ -1,5 +1,5 @@
 class Driver < ApplicationRecord
-  has_many :trips   # plural
+  has_many :trips, dependent: :nullify
   has_many :passengers, :through => :trips
 
   validates :name, presence: true
