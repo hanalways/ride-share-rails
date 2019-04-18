@@ -82,11 +82,38 @@ describe PassengersController do
   end
 
   describe "new" do
-    # Your tests go here
+    it "returns status code 200" do
+      get new_passenger_path
+      must_respond_with :ok
+    end
   end
 
   describe "create" do
-    # Your tests go here
+    it "creates a new passenger" do 
+      # Arrange
+      passenger_data = {
+        passenger: {
+          name: "newest passenger",
+          phone_num: "666-666-6666",
+        },
+      }
+
+      # Act
+      expect {
+        post passengers_path, params: passenger_data
+      }.must_change "Passenger.count", +1
+
+      # Assert
+      must_respond_with :redirect
+      must_redirect_to passengers_path
+    end
+
+    it "validates parameters correctly" do 
+      passenger = Passenger.new
+      expect(passenger.valid?).must_equal false
+      expect(passenger.errors.messages[:name][0]).must_equal "can't be blank"
+      expect(passenger.errors.messages[:phone_num][0]).must_equal "can't be blank"
+    end
   end
 
   describe "destroy" do
