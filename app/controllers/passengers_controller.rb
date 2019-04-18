@@ -55,7 +55,7 @@ class PassengersController < ApplicationController
   def destroy
     @passenger = Passenger.find_by(id: params[:id])
     @passenger.destroy
-    redirect_back fallback_location: :passengers_path
+    redirect_to passengers_path
   end
 
   private

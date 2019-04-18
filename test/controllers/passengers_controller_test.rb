@@ -117,6 +117,14 @@ describe PassengersController do
   end
 
   describe "destroy" do
-    # Your tests go here
+    it "removes passenger from database" do
+      deleted_passenger = Passenger.create!(name: "deleted passenger", phone_num: "777-777-7777")
+      expect {
+        delete passenger_path(deleted_passenger)
+      }.must_change "Passenger.count", -1
+
+      must_respond_with :redirect
+      must_redirect_to passengers_path
+    end
   end
 end
