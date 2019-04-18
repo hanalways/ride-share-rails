@@ -19,7 +19,7 @@ class TripsController < ApplicationController
 
   def create
     trip_data = trip_params
-    driver = Driver.availability_status
+    driver = Driver.available_status
     @trip = Trip.new(trip_data.merge(:driver_id => driver.id))
 
     saved = @trip.save && driver.update_status
