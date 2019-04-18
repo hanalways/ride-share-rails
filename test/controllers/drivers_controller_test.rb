@@ -75,17 +75,65 @@ describe DriversController do
       patch driver_path(-1), params: driver_params 
       must_redirect_to drivers_path
     end
+
+    it "validates parameters correctly" do 
+      new_driver.name = nil
+      expect(new_driver.save).must_equal false
+      expect(new_driver.valid?).must_equal false
+      expect(new_driver.errors.messages[:name][0]).must_equal "can't be blank"
+    end
   end
 
   describe "new" do
-    # Your tests go here
+    it "returns status code 200" do 
+      get new_driver_path
+      must_respond_with :ok
+    end
   end
 
   describe "create" do
-    # Your tests go here
+    it "creates a new driver" do 
+      driver_data = {
+        driver: {
+          name: "newest driver",
+          vin: "random vin",
+          car_make: "big company",
+          car_model: "sedan",
+        },
+      }
+
+      expect {
+        post drivers_path, params: driver_data 
+      }.must_change "Driver.count", +1
+
+      must_respond_with :redirect 
+      must_redirect_to drivers_path
+    end
+
+    it "validates parameters correctly" do 
+      driver = Driver.new
+      expect(driver.valid?).must_equal false
+      expect(driver.errors.messages[:name][0]).must_equal "can't be blank"
+      expect(driver.errors.messages[:vin][0]).must_equal "can't be blank"
+      expect(driver.errors.messages[:car_make][0]).must_equal "can't be blank"
+      expect(driver.errors.messages[:car_model][0]).must_equal "can't be blank"
+    end
   end
 
   describe "destroy" do
-    # Your tests go here
+    it "removes the driver from the database" do 
+      deleted_driver = Driver.create!(
+        name: "deleted driver",
+        vin: "random vin",
+        car_make: "car",
+        car_model: "car",
+      )
+      expect {
+        delete driver_path(deleted_driver)
+      }.must_change "Driver.count", -1
+
+      must_respond_with :redirect
+      must_redirect_to drivers_path 
+    end
   end
 end

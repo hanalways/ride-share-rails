@@ -19,9 +19,9 @@ class DriversController < ApplicationController
   end
 
   def create
-    @drivers = Driver.new(driver_params) # will add car make and car model to the db
+    @driver = Driver.new(driver_params) # will add car make and car model to the db
 
-    saved = @drivers.save
+    saved = @driver.save
 
     if saved
       redirect_to drivers_path
@@ -41,14 +41,14 @@ class DriversController < ApplicationController
 
   def update
     driver_id = params[:id]
-    driver = Driver.find_by(id: driver_id)
-    unless driver
+    @driver = Driver.find_by(id: driver_id)
+    unless @driver
       redirect_to drivers_path
       return
     end
 
-    if driver.update(driver_params)
-      redirect_to driver_path(driver)
+    if @driver.update(driver_params)
+      redirect_to driver_path(@driver)
     else
       render :edit
     end
@@ -63,7 +63,6 @@ class DriversController < ApplicationController
   end
 
   private
-
   def driver_params
     return params.require(:driver).permit(
              :name,
