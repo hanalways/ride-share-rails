@@ -6,11 +6,12 @@ class DriversController < ApplicationController
   def show
     driver_id = params[:id]
     @driver = Driver.find_by(id: driver_id)
-    @trips = @driver.trips.all
-
-    if @driver.nil?
-      head :not_found
+    unless @driver 
+      redirect_to drivers_path 
+      return
     end
+
+    @trips = @driver.trips.all
   end
 
   def new
@@ -34,7 +35,7 @@ class DriversController < ApplicationController
     @driver = Driver.find_by(id: driver_id)
 
     if @driver.nil?
-      redirect_to trips_path
+      redirect_to drivers_path
     end
   end
 
