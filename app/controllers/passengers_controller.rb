@@ -6,7 +6,14 @@ class PassengersController < ApplicationController
   def show
     passenger_id = params[:id]
     @passenger = Passenger.find_by(id: passenger_id)
-    @trips = @passenger.trips.all
+
+    unless @passenger 
+      redirect_to passengers_path
+      return
+    end
+
+    @trip = Trip.new
+    @trips = @passenger.trips
   end
 
   def new
@@ -25,6 +32,10 @@ class PassengersController < ApplicationController
   def edit
     passenger_id = params[:id]
     @passenger = Passenger.find_by(id: passenger_id)
+
+    unless @passenger 
+      redirect_to passengers_path
+    end
   end
 
   def update

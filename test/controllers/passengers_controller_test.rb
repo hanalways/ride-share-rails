@@ -2,7 +2,7 @@ require "test_helper"
 
 describe PassengersController do
   let (:new_passenger) {
-    Passenger.new(name: "Hana", phone_num: "206-555-5555")
+    Passenger.create!(name: "Hana Clements", phone_num: "206-555-5555")
   }
 
   describe "index" do
@@ -22,14 +22,28 @@ describe PassengersController do
 
   describe "show" do
     it "renders for an existing passenger" do 
-      # get passenger_path(passenger.id)
+      get passenger_path(new_passenger.id)
 
-      # must_respond_with :ok
+      must_respond_with :ok
+    end
+
+    it "redirects if given an invalid passenger id" do 
+      get passenger_path(-1)
+
+      must_respond_with :redirect
     end
   end
 
   describe "edit" do
-    # Your tests go here
+    it "can get the edit page for an existing passenger" do 
+      get edit_passenger_path(new_passenger.id)
+      must_respond_with :success
+    end
+
+    it "will respond with a redirect when attempting to edit a nonexistent path" do 
+      get edit_passenger_path(-1)
+      must_redirect_to passengers_path
+    end
   end
 
   describe "update" do
