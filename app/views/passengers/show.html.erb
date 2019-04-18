@@ -10,7 +10,9 @@
       <%= @passenger.phone_num %>
     </li>
   </ul>
-  <button type="button">Request Ride</button>
+  <button type = "button" >
+  <%= link_to "Request Ride", new_trip_path %>
+  </button>
 </section>
 
 <h2>Trips</h2>
@@ -30,7 +32,14 @@
     <tr>
       <td><%= link_to trip.id, trip_path(trip.id) %></td>
       <td><%= trip.date %></td>
-      <td><%= link_to trip.driver.name, trip_path(trip.driver_id) %></td>
+    
+    # when driver is deleted 
+    <% if trip.driver %>
+      <td><%= link_to trip.driver.name, driver_path(trip.driver.id) %></td>
+    <% else %>
+      <td>Inactive Driver</td>
+    <% end %>
+
       <td><%= link_to trip.passenger.name, trip_path(trip.passenger_id) %></td>
       <td><%= trip.cost %></td>
       <td><%= trip.rating %></td>

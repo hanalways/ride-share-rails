@@ -50,7 +50,7 @@ class DriversController < ApplicationController
   def destroy
     driver_id = params[:id]
     driver = Driver.find_by(id: driver_id)
-
+    # if dirver is nil destroy all th instances of trip
     driver.destroy
     redirect_to drivers_path
   end
@@ -64,6 +64,7 @@ class DriversController < ApplicationController
              :status,
              :car_make,
              :car_model
+
            )
   end
 end
