@@ -3,11 +3,9 @@
     <li>
       <img src="http://placekitten.com/150/150">
     </li>
-    <li>
-      <%= @passenger.name %>
-    </li>
-    <li>
-      <%= @passenger.phone_num %>
+      <p>Name: <%= @passenger.name %></p>
+      <p>Your number: <%= @passenger.phone_num %></p>
+      <p>Rides expense: <%= @passenger.total_cost%></p>
     </li>
   </ul>
   <li>

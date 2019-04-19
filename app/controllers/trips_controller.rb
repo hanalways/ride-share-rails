@@ -40,10 +40,28 @@ class TripsController < ApplicationController
 
   def update
     @trip = Trip.find_by(id: params[:id])
-    if @trip.update(trip_params)
-      redirect_to passenger_path(@trip[:passenger_id])
+    if !@trip.nil?
+      if @trip.update(trip_params)
+        redirect_to trip_path(@trip.id)
+      else
+        render :edit
+      end
     else
-      render :edit
+      redirect_to trips_path
+    end
+  end
+
+  def update_rating
+    @trip = Trip.find_by(id: params[:id])
+    if !@trip.nil?
+      if @trip.update(trip_params)
+        @trip.driver.update(status: true)
+        redirect_to trip_path(@trip.id)
+      else
+        render :show
+      end
+    else
+      redirect_to trips_path
     end
   end
 

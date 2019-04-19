@@ -11,7 +11,12 @@
       <p>Total Earnings: <%= @driver.total_earnings %></p>
     </li>
   </ul>
+  
+  <% if @driver.status == false %>
   <button type="button">Go Online</button>
+  <% else %>
+  <td> Driver currently on a Trip</td>
+  <% end %>
 
 </section>
 
