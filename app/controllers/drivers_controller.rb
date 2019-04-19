@@ -57,7 +57,10 @@ class DriversController < ApplicationController
   def destroy
     driver_id = params[:id]
     driver = Driver.find_by(id: driver_id)
-    # if dirver is nil destroy all th instances of trip
+
+    unless driver 
+      head :not_found
+    end
     driver.destroy
     redirect_to drivers_path
   end

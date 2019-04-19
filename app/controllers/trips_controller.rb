@@ -81,7 +81,8 @@ class TripsController < ApplicationController
       @trip.passenger.update(on_trip: false)
       @trip.destroy
     end
-    redirect_to trips_path
+    
+    redirect_back(fallback_location: root_path)
   end
 
   private

@@ -59,7 +59,7 @@
       <%= link_to "Edit", edit_driver_path %>
     </li>
     <li>
-      <%= link_to "Delete", passenger_path(@driver.id), method: :delete, data: { confirm: "Do you wish to delete #{@driver.name}?" } %>
+      <%= link_to "Delete", driver_path(@driver.id), method: :delete, data: { confirm: "Do you wish to delete #{@driver.name}?" } %>
     </li>
   </ul>
 </aside>
