@@ -5,7 +5,12 @@ class TripsController < ApplicationController
 
   def show
     id = params[:id]
-    @trip = Trip.find(id)
+    @trip = Trip.find_by(id: id)
+
+    unless @trip
+      redirect_to trips_path
+      return 
+    end
   end
 
   def new
@@ -36,6 +41,10 @@ class TripsController < ApplicationController
 
   def edit
     @trip = Trip.find_by(id: params[:id])
+
+    unless @trip
+      redirect_back(fallback_location: root_path)
+    end
   end
 
   def update
