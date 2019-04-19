@@ -18,14 +18,17 @@ class TripsController < ApplicationController
   end
 
   def create
-    trip_data = trip_params
-    driver = Driver.available_status
-    @trip = Trip.new(trip_data.merge(:driver_id => driver.id))
+    @trip = Trip.new
+    @trip.passenger = Passenger.find(params[:passenger_id])
+    @trip.driver = select_driver
 
-    saved = @trip.save && driver.update_status
+    @trip.date = Date.today.to_s
+    @trip.cost = 10
+    if @trip.save
+      @trip.driver.update(status: false)
+      @trip.passenger.update(on_trip: true)
 
-    if saved
-      redirect_to passenger_path(trip_data[:passenger_id])
+      redirect_to passenger_path(@trip[:passenger_id])
     else
       render :new
     end
@@ -37,16 +40,36 @@ class TripsController < ApplicationController
 
   def update
     @trip = Trip.find_by(id: params[:id])
-    if @trip.update(trip_params)
-      redirect_to passenger_path(@trip[:passenger_id])
+    if !@trip.nil?
+      if @trip.update(trip_params)
+        redirect_to trip_path(@trip.id)
+      else
+        render :edit
+      end
     else
-      render :edit
+      redirect_to trips_path
+    end
+  end
+
+  def update_rating
+    @trip = Trip.find_by(id: params[:id])
+    if !@trip.nil?
+      if @trip.update(trip_params)
+        @trip.driver.update(status: true)
+        redirect_to trip_path(@trip.id)
+      else
+        render :show
+      end
+    else
+      redirect_to trips_path
     end
   end
 
   def destroy
     @trip = Trip.find_by(id: params[:id])
     if @trip
+      @trip.driver.update(status: true)
+      @trip.passenger.update(on_trip: false)
       @trip.destroy
     end
     redirect_to trips_path
@@ -56,5 +79,11 @@ class TripsController < ApplicationController
 
   def trip_params
     params.require(:trip).permit(:id, :date, :rating, :cost, :driver_id, :passenger_id)
+  end
+
+  def select_driver
+    drivers = Driver.all
+    drivers_available = drivers.select { |driver| driver.status == true }
+    return drivers_available.sample
   end
 end
