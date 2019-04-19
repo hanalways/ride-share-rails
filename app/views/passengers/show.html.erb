@@ -9,6 +9,9 @@
     <li>
       <%= @passenger.phone_num %>
     </li>
+    <li>
+      Total Amount Charged: <%= @passenger.total_cost / 100 %>
+    </li>
   </ul>
   <button type = "button" >
   <%= link_to "Request Ride", new_trip_path %>
