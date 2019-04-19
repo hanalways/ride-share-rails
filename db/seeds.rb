@@ -5,6 +5,8 @@ puts "Loading raw driver data from #{DRIVER_FILE}"
 
 driver_failures = []
 CSV.foreach(DRIVER_FILE, :headers => true) do |row|
+  next if Driver.where(id: row['id']).present?
+
   driver = Driver.new
   driver.id = row['id']
   driver.name = row['name']
@@ -28,6 +30,8 @@ puts "Loading raw passenger data from #{PASSENGER_FILE}"
 
 passenger_failures = []
 CSV.foreach(PASSENGER_FILE, :headers => true) do |row|
+  next if Passenger.where(id: row['id']).present?
+
   passenger = Passenger.new
   passenger.id = row['id']
   passenger.name = row['name']
@@ -51,6 +55,8 @@ puts "Loading raw trip data from #{TRIP_FILE}"
 
 trip_failures = []
 CSV.foreach(TRIP_FILE, :headers => true) do |row|
+  next if Trip.where(id: row['id']).present?
+
   trip = Trip.new
   trip.id = row['id']
   trip.driver_id = row['driver_id']
