@@ -2,11 +2,15 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.passenger {
-  display: float;
-}
-
 .passenger [src] {
   float: left;
   padding: 1em;
+  border-radius: 25px;
+}
+
+aside ul {
+  display: flex;
+  flex-flow: wrap row;
+  justify-content: center;
+  padding-left: 50px;
 }

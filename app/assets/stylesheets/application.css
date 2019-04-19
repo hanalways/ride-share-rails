@@ -13,40 +13,72 @@
  *= require_tree .
  *= require_self
  */
- @import url('https://fonts.googleapis.com/css?family=Merriweather|Montserrat');
+@import url('https://fonts.googleapis.com/css?family=Merriweather|Montserrat');
 
- h1 {
+html {
+  display: flex;
+  flex-direction: inherit;
+  width: 100%;
+  justify-content: center;
+}
+
+h1 {
     font-family: 'Merriweather', serif;
- }
+}
 
- body {
+body {
     font-family: 'Montserrat', sans-serif;
- }
+    width: 80%;
+}
 
- header, footer {
+header, footer {
    display: flex;
    flex-flow: column wrap;
    align-content: center;
- }
+}
+ 
+footer {
+   margin-top: 2em;
+   font-size: .7em;
+}
 
- nav ul {
+nav ul {
+  width: 100%;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
- }
+}
 
- li {
+li {
    list-style: none;
    padding: 10px 20px 10px 20px;
- }
+}
 
- nav li:hover {
-  background-color: lightslategray;
-  color: white;
-  border-radius: 20px;
- }
+.height {
+  height: 70px;
+}
 
- nav a[href] {
-   color: black;
+a[href] {
+   color: purple;
    text-decoration: none;
- }
+}
+
+nav li:hover {
+  background-color: lightslategray;
+  border-radius: 20px;
+}
+
+table td {
+  padding: 1.5em;
+}
+
+table th { 
+  background-color: silver;
+  border-bottom: 3px solid black;
+}
+
+[src] {
+  float: left;
+  padding: 1em;
+  border-radius: 25px;
+}
