@@ -4,8 +4,6 @@ class Driver < ApplicationRecord
 
   validates :name, presence: true
   validates :vin, presence: true
-  validates :car_make, presence: true
-  validates :car_model, presence: true
 
   def average_rating
     #self is same as driver instance(driver model)

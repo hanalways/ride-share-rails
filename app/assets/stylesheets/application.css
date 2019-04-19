@@ -13,6 +13,15 @@
  *= require_tree .
  *= require_self
  */
+ @import url('https://fonts.googleapis.com/css?family=Merriweather|Montserrat');
+
+ h1 {
+    font-family: 'Merriweather', serif;
+ }
+
+ body {
+    font-family: 'Montserrat', sans-serif;
+ }
 
  header, footer {
    display: flex;
