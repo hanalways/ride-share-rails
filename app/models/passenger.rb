@@ -8,9 +8,10 @@ class Passenger < ApplicationRecord
     if self.trips.length.zero?
       return 0
     else
-      return self.trips.sum do |trip|
+      total = self.trips.sum do |trip|
         trip.cost
       end
+      return (total/100).round(2)
     end
   end
 end
