@@ -23,9 +23,10 @@ class TripsController < ApplicationController
     @trip.driver = select_driver
 
     @trip.date = Date.today.to_s
-    @trip.cost = 0
+    @trip.cost = 10
     if @trip.save
       @trip.driver.update(status: false)
+      @trip.passenger.update(on_trip: true)
 
       redirect_to passenger_path(@trip[:passenger_id])
     else
@@ -49,6 +50,8 @@ class TripsController < ApplicationController
   def destroy
     @trip = Trip.find_by(id: params[:id])
     if @trip
+      @trip.driver.update(status: true)
+      @trip.passenger.update(on_trip: false)
       @trip.destroy
     end
     redirect_to trips_path

@@ -10,9 +10,13 @@ class Driver < ApplicationRecord
   def average_rating
     #self is same as driver instance(driver model)
     sum = 0
+
     self.trips.each do |trip|
-      sum += trip.rating
+      unless trip.rating == nil
+        sum += trip.rating
+      end
     end
+
     length = self.trips.length
 
     if length == 0
@@ -37,19 +41,8 @@ class Driver < ApplicationRecord
       total = (trip.cost - 1.65) * 0.8
       total_earnings += total
     end
+
+    total = total_earnings / 100
     return total.round(2)
   end
-
-  # How would they be availble ???
-  # need to do the migrations for status: boolean
-
-  #   def self.available_status
-  #     availability = Driver.where(status: true)
-  #     available_driver = availability.sample
-  #     return available_driver
-  #   end
-
-  #   def update_status
-  #     return update(status: false)
-  #   end
 end

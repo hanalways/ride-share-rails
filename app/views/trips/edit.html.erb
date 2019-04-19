@@ -1,0 +1,39 @@
+<% if @trip.errors.any? %>
+  <ul class="errors">
+    <% @trip.errors.each do |field, message| %>
+      <li>
+        <strong><%= field.capitalize %>: </strong><%= message %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+<h2>Edit Trip <%= @trip.id %></h2>
+<%= form_for @trip do |f| %>
+  <ul>
+    <div>
+      <li>
+        <%= f.label :passenger%>
+        <%= f.text_field :passenger_id %>
+      </li>
+    </div>
+    <div>
+      <li>
+        <%= f.label :driver%>
+        <%= f.text_field :driver_id %>
+      </li>
+    </div>
+    <div>
+      <%= f.label :cost %>:
+      <%= f.text_field :cost %>
+    </li>
+  </div>
+  <div>
+    <li>
+      <%= f.label :rating%>
+      <!-- <%= f.select :rating, options_for_select(1..5) %> -->
+      <%= f.text_field :rating %>
+    </li>
+  </div>
+</ul>
+<%= f.submit %>
+<% end %>

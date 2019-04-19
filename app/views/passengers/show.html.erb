@@ -11,52 +11,49 @@
     </li>
   </ul>
   <li>
-  <%= button_to "Request Trip", passenger_trips_path(@passenger.id)%>
-  <li>
-</section>
-
-<h2>Trips</h2>
-<table>
-  <tr>
-    <th>ID</th>
-    <th>Date</th>
-    <th>Driver</th>
-    <th>Passenger</th>
-    <th>Price</th>
-    <th>Rating</th>
-    <th>Delete</th>
-    <th>Edit</th>
-  </tr>
-  
-  <% @trips.each do |trip| %>
-    <tr>
-      <td><%= link_to trip.id, trip_path(trip.id) %></td>
-      <td><%= trip.date %></td>
-    
-    # when driver is deleted 
-    <% if trip.driver %>
-      <td><%= link_to trip.driver.name, driver_path(trip.driver.id) %></td>
+    <% if @passenger.on_trip == false%>
+      <%= button_to "Request Trip", passenger_trips_path(@passenger.id)%>
     <% else %>
-      <td>Inactive Driver</td>
-    <% end %>
-
-      <td><%= link_to trip.passenger.name, trip_path(trip.passenger_id) %></td>
-      <td><%= trip.cost %></td>
-      <td><%= trip.rating %></td>
-      <td><%= link_to "Delete", trip_path(trip), method: :delete, data: { confirm: "Do you want to delete this trip?" } %></td>
-      <td><%= link_to "Edit", edit_trip_path %></td>
-    </tr>
-  <% end %>
-</table>
-
-
-<aside>
-  <ul>
+      <p>Passenger on trip</p>
+    <%end%>
     <li>
-      <%= link_to "Edit", edit_passenger_path %>
-    </li>
-    <li>
-      <%= link_to "Delete", passenger_path(@passenger.id), method: :delete, data: { confirm: "Do you wish to delete #{@passenger.name}?" } %>
-    </li>
-  </ul>
-</aside>
+    </section>
+    <h2>Trips</h2>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Date</th>
+        <th>Driver</th>
+        <th>Passenger</th>
+        <th>Price</th>
+        <th>Rating</th>
+        <th>Delete</th>
+        <th>Edit</th>
+      </tr>
+      <% @trips.each do |trip| %>
+        <tr>
+          <td><%= link_to trip.id, trip_path(trip.id) %></td>
+          <td><%= trip.date %></td>
+          <% if trip.driver %>
+            <td><%= link_to trip.driver.name, driver_path(trip.driver.id) %></td>
+          <% else %>
+            <td>Inactive Driver</td>
+          <% end %>
+          <td><%= link_to trip.passenger.name, trip_path(trip.passenger_id) %></td>
+          <td><%= trip.cost %></td>
+          <td><%= trip.rating %></td>
+          <td><%= link_to "Delete", trip_path(trip), method: :delete, data: { confirm: "Do you want to delete this trip?" } %></td>
+          <td><%= link_to "Edit", edit_trip_path %></td>
+        </tr>
+      <% end %>
+    </table>
+    <aside>
+      <ul>
+        <li>
+          <%= link_to "Edit", edit_passenger_path %>
+        </li>
+        <li>
+          <%= link_to "Delete", passenger_path(@passenger.id), method: :delete, data: { confirm: "Do you wish to delete #{@passenger.name}?" } %>
+        </li>
+      </ul>
+    </aside>
