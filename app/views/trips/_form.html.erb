@@ -7,18 +7,19 @@
     <% end %>
   </ul>
 <% end %>
-<%# form_with model: @trip, class: 'trip-form' do |f| %>
-  <!–– create form for new trip ––>
-  <%# f.submit button_text %>
-  <%# end %>
+
   <%= form_with model: @trip, class: 'trip-form' do |f| %>
-    <div>
-      <%= f.label :date %>:
-      <%= f.text_field :date %>
-    </div>
-    <div>
-      <%= f.label :name, "Passenger name:" %>
-      <%= f.text_field :name %>
-    </div>
-    <%= f.submit action_type, class: "trip-form-submit-button" %>
-  <% end %>
+
+  <%= f.label :date %>:
+<%= f.text_field :date %>
+
+<%= f.label :name %>:
+<%= f.select :passenger_id, Passenger.all.map{ |pass| [pass.name, pass.id] } %>
+
+
+<%= f.label :cost %>:
+<%= f.text_field :cost %>
+
+<%= f.submit action_type, class: "trip-form-submit-button" %>
+
+<% end %>

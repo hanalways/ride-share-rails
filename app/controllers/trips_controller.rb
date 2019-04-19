@@ -18,14 +18,16 @@ class TripsController < ApplicationController
   end
 
   def create
-    trip_data = trip_params
-    driver = Driver.available_status
-    @trip = Trip.new(trip_data.merge(:driver_id => driver.id))
+    @trip = Trip.new
+    @trip.passenger = Passenger.find(params[:passenger_id])
+    @trip.driver = select_driver
 
-    saved = @trip.save && driver.update_status
+    @trip.date = Date.today.to_s
+    @trip.cost = 0
+    if @trip.save
+      @trip.driver.update(status: false)
 
-    if saved
-      redirect_to passenger_path(trip_data[:passenger_id])
+      redirect_to passenger_path(@trip[:passenger_id])
     else
       render :new
     end
@@ -56,5 +58,11 @@ class TripsController < ApplicationController
 
   def trip_params
     params.require(:trip).permit(:id, :date, :rating, :cost, :driver_id, :passenger_id)
+  end
+
+  def select_driver
+    drivers = Driver.all
+    drivers_available = drivers.select { |driver| driver.status == true }
+    return drivers_available.sample
   end
 end

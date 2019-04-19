@@ -43,13 +43,13 @@ class Driver < ApplicationRecord
   # How would they be availble ???
   # need to do the migrations for status: boolean
 
-  def self.available_status
-    availability = Driver.where(status: true)
-    available_driver = availability.sample
-    return available_driver
-  end
+  #   def self.available_status
+  #     availability = Driver.where(status: true)
+  #     available_driver = availability.sample
+  #     return available_driver
+  #   end
 
-  def update_status
-    return update(status: false)
-  end
+  #   def update_status
+  #     return update(status: false)
+  #   end
 end
