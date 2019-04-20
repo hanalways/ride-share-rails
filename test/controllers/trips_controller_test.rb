@@ -1,10 +1,10 @@
 require "test_helper"
-
+require "pry"
 describe TripsController do
   let(:passenger) {
     Passenger.create!(
       name: "test passenger",
-      phone_num: "555-555-5555"
+      phone_num: "555-555-5555",
     )
   }
   let(:driver) {
@@ -12,7 +12,7 @@ describe TripsController do
       name: "test driver",
       vin: "test vin",
       car_make: "test car",
-      car_model: "test model"
+      car_model: "test model",
     )
   }
   let(:trip) {
@@ -21,11 +21,11 @@ describe TripsController do
       passenger_id: passenger.id,
       date: Date.today,
       rating: 3,
-      cost: 10.75
+      cost: 10.75,
     )
   }
   describe "show" do
-    it "can show a trip with a valid id" do 
+    it "can show a trip with a valid id" do
       get trip_path(trip.id)
       must_respond_with :ok
     end
@@ -37,41 +37,46 @@ describe TripsController do
   end
 
   describe "edit" do
-    it "can get the edit page for an existing trip" do 
+    it "can get the edit page for an existing trip" do
       get edit_trip_path(trip)
       must_respond_with :ok
     end
 
-    it "will respond with a redirect when attempting to edit a nonexistent trip" do 
+    it "will respond with a redirect when attempting to edit a nonexistent trip" do
       get edit_trip_path(-1)
       must_respond_with :redirect
     end
   end
 
   describe "update" do
-    let(:trip_params) {
-      {
-        trip: {
-         rating: 5,
-        },
-      }
+    trip = Trip.first
+
+    trip_hash = {
+      trip: {
+        date: "April 19, 2019",
+        cost: 1445,
+        passenger_id: Passenger.last.id,
+        driver_id: Driver.last.id,
+      },
     }
 
-    it "can update data on an existing trip" do
-    skip  
+    it "should update existing trip" do
+      expect {
+        patch trip_path(trip.id), params: trip_hash
+      }.wont_change "Trip.count"
+
+      must_respond_with :redirect
     end
 
-    it "redirects to root if given invalid id" do 
-    skip
-    end
+    it "should redirect to the edit page if given an invalid trip " do
+      patch trip_path(-1), params: trip_hash
 
-    it "validates the parameters correctly" do
-    skip
+      must_respond_with :redirect
     end
   end
 
   describe "create" do
-    it "creates a new trip" do 
+    it "creates a new trip" do
       trip_data = {
         trip: {
           driver_id: driver.id,
@@ -91,13 +96,13 @@ describe TripsController do
   end
 
   describe "destroy" do
-    it "removes trip from database" do 
+    it "removes trip from database" do
       deleted_trip = Trip.create!(
         passenger_id: Passenger.all.sample.id,
         driver_id: Driver.all.sample.id,
         date: Date.today,
         rating: 3,
-        cost: 20.50
+        cost: 20.50,
       )
 
       expect {

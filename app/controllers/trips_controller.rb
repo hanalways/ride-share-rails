@@ -9,7 +9,7 @@ class TripsController < ApplicationController
 
     unless @trip
       redirect_to trips_path
-      return 
+      return
     end
   end
 
@@ -48,15 +48,12 @@ class TripsController < ApplicationController
   end
 
   def update
-    @trip = Trip.find_by(id: params[:id])
-    if !@trip.nil?
-      if @trip.update(trip_params)
-        redirect_to trip_path(@trip.id)
-      else
-        render :edit
-      end
-    else
+    trip = Trip.find_by(id: params[:id])
+    if @trip.nil?
       redirect_to trips_path
+    else
+      trip.update(trip_params)
+      redirect_to trip_path(@trip.id)
     end
   end
 
@@ -81,7 +78,7 @@ class TripsController < ApplicationController
       @trip.passenger.update(on_trip: false)
       @trip.destroy
     end
-    
+
     redirect_back(fallback_location: root_path)
   end
 

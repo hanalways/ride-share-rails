@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :drivers
 
   resources :passengers do
-    resources :trips, only: [:create]
+    resources :trips
   end
 
   resources :trips, except: [:create]
