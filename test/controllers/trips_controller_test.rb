@@ -55,8 +55,8 @@ describe TripsController do
       trip: {
         date: "April 19, 2019",
         cost: 1445,
-        passenger_id: Passenger.last.id,
-        driver_id: Driver.last.id,
+        passenger_id: Passenger.id.last,
+        driver_id: Driver.id.last,
       },
     }
 
